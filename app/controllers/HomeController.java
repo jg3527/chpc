@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Fur;
+import play.Logger;
 import play.mvc.*;
 
 import views.html.*;
@@ -17,7 +19,13 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result index() {
+        addFur();
         return ok(index.render("Your new application is ready."));
     }
-
+    public void addFur() {
+        Fur fur = new Fur();
+        fur.amount = 1;
+        fur.save();
+        Logger.debug("fur id: " + fur.id);
+    }
 }
