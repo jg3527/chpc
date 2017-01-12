@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 /**
@@ -14,11 +15,17 @@ import java.util.Date;
 public class Fur extends Model {
     @Id
     public Integer id;
-    public Date date;
+    public long date;
     public String gender;
     public String color;
-    public Integer amount;
     public double price;
     public String note;
-    public FurOrder order;
+
+    public static Model.Finder<String, Fur> find = new Model.Finder<>(
+            Fur.class);
+
+    public static Fur getFurById(Integer id){
+        return find.byId(id.toString());
+    }
+
 }

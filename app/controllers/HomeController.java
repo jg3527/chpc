@@ -1,9 +1,8 @@
 package controllers;
 
-import models.Fur;
-import play.Logger;
+import com.google.inject.Inject;
+import exceptions.CreateException;
 import play.mvc.*;
-
 import views.html.*;
 
 /**
@@ -18,14 +17,24 @@ public class HomeController extends Controller {
      * this method will be called when the application receives a
      * <code>GET</code> request with a path of <code>/</code>.
      */
+    private final HomeFacade homeFacade;
+
+    @Inject
+    public HomeController(HomeFacade homeFacade) {
+        this.homeFacade = homeFacade;
+    }
+
     public Result index() {
-        addFur();
         return ok(index.render("Your new application is ready."));
     }
-    public void addFur() {
-        Fur fur = new Fur();
-        fur.amount = 1;
-        fur.save();
-        Logger.debug("fur id: " + fur.id);
+
+    public Result addEditFurOrder() {
+        try {
+            homeFacade.addEditFurOrder(request().body().asJson());
+            return ok();
+        } catch (CreateException e) {
+            e.printStackTrace();
+            return badRequest();
+        }
     }
 }
