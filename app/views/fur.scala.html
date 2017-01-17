@@ -1,0 +1,44 @@
+@nav("Fur") {
+<link rel="stylesheet" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css">
+<link rel="stylesheet" media="screen" href="https://cdn.datatables.net/1.10.13/css/dataTables.foundation.min.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+
+
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.13/js/dataTables.foundation.min.js"></script>
+
+<script src="@routes.Assets.versioned("javascripts/fur.js")" type="text/javascript"></script>
+<form>
+
+    <div class="large-12 columns">
+    <div class="row">
+    <br>
+    <table id="table" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>性别</th>
+            <th>颜色</th>
+            <th>价格</th>
+            <th>数量</th>
+            <th>时间</th>
+            <th>备注</th>
+        </tr>
+        </thead>
+        <tbody>
+         </tbody>
+        </div>
+    </div>
+</from>
+    <script type="text/template" id="infoTemplate">
+    <tr>
+        <td>{{Id}}</td>
+        <td>{{Gender}}</td>
+        <td>{{Color}}</td>
+        <td>{{Price}}</td>
+        <td>{{Amount}}</td>
+        <td>{{Date}}</td>
+        <td>{{Note}}</td>
+    </tr>
+    </script>
+}

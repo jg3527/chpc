@@ -5,19 +5,16 @@ import com.avaje.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import java.util.Date;
 
 /**
- * Created by jingguo on 1/4/17.
+ * Created by jingguo on 1/11/17.
  */
 @Entity
-public class ReturnRecord extends Model {
+public class ClothesFurUsage extends Model{
     @Id
     public Integer id;
+    public Fur fur;
+    public Integer amount;
     @ManyToOne
     public Clothes clothes;
-    @OneToOne
-    public SaleRecord saleRecord;
-    public Date date;
 }

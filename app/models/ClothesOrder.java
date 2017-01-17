@@ -2,9 +2,11 @@ package models;
 
 import com.avaje.ebean.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 /**
  * Created by jingguo on 1/2/17.
@@ -14,11 +16,12 @@ import java.util.Date;
 public class ClothesOrder extends Model {
     @Id
     public Integer id;
-    public Date date;
-    public String name;
-    public Fur fur;
-    public Double amount;
+    public Long date;
+    public String factoryName;
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<FurUsage> furList;
+    public List<ClothesAmount> clothes;
+    public boolean done;
     public String note;
-    public Double processingFee;
 
 }

@@ -17,6 +17,7 @@ public class Receipt extends Model {
     List<SaleRecord> saleRecords;
     public Date date;
     public List<PaymentRecord> paymentRecords;
+    /*回扣*/
     public List<RebateRecord> rebateRecords;
     public Double total;
     public boolean paid;

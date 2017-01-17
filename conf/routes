@@ -14,3 +14,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 
 PUT    /fur                         @controllers.HomeController.addEditFurOrder
+
+GET    /fur/edit                    @controllers.HomeController.getFur
+GET    /fur                         @controllers.HomeController.getAllFur

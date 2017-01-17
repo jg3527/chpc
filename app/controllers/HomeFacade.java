@@ -5,43 +5,58 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.CreateException;
+import models.Clothes;
 import models.Fur;
-import models.FurOrder;
 import play.Logger;
+import play.libs.Json;
 
 import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by jingguo on 1/9/17.
  */
 public class HomeFacade {
 
-    public void addEditFurOrder(JsonNode jsonNode) throws CreateException {
-        Fur fur = new Fur();
-        FurOrder furOrder = null;
+    public void addEditFurOrder(JsonNode jsonNode){
+        Fur fur = null;
+
         if (jsonNode.hasNonNull("id")) {
-            furOrder = FurOrder.getFurOrderById(jsonNode.get("id").asInt());
+            fur = Fur.getFurById(jsonNode.get("id").asInt());
         }
 
-        jsonToModel(jsonNode, fur);
-
-        if (furOrder != null) {
+        if (fur != null) {
+            jsonToModel(jsonNode, fur);
             fur.update();
-            furOrder.fur = fur;
-            furOrder.amount = jsonNode.get("amount").asInt();
-            furOrder.update();
         } else {
+            fur = new Fur();
+            jsonToModel(jsonNode, fur);
             fur.save();
-            furOrder = new FurOrder();
-            furOrder.fur = fur;
-            furOrder.amount = jsonNode.get("amount").asInt();
-            furOrder.save();
         }
 
-        Logger.debug(String.format("Saved furOrder %s", furOrder.fur.id));
+        Logger.debug(String.format("Saved fur %s", fur.id));
+    }
+
+    public JsonNode getAllFur() {
+        return Json.toJson(Fur.getAllFur());
+    }
+
+    public void addEditClothes(JsonNode jsonNode) {
+        Clothes clothes = null;
+        if (jsonNode.hasNonNull("id")) {
+            clothes = Clothes.getClothesById(jsonNode.get("id").asInt());
+        }
+
+        if (clothes != null) {
+            jsonToModel(jsonNode, clothes);
+            clothes.update();
+        } else {
+            clothes = new Clothes();
+            jsonToModel(jsonNode, clothes);
+            clothes.save();
+        }
+    }
+
+    public void addSaleRecord(JsonNode jsonNode){
 
     }
 
@@ -87,7 +102,7 @@ public class HomeFacade {
         }
         throw new CreateException(String.format("Failed to create entity of class %s from json %s", entityClass.getName(), jsonNode.toString()));
     }*/
-    public <T extends Model> void jsonToModel(JsonNode jsonNode, T entity) throws CreateException {
+    public <T extends Model> void jsonToModel(JsonNode jsonNode, T entity){
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         T entity2 = (T) mapper.convertValue(jsonNode, entity.getClass());
